@@ -40,7 +40,7 @@ button { cursor: pointer; }
 .field-label input:focus, .field-label select:focus, .field-label textarea:focus { border-color: #0ABFC0; box-shadow: 0 0 0 1px #0ABFC0, 0 0 4px #0bb8b847; }
 .field-label textarea { resize: vertical; }
 
-input[type='range'] { -webkit-appearance: none; -moz-appearance: none; appearance: none; background: linear-gradient(to right, #0ABFC0 0%, #0ABFC0 55%, #DCE6EF 55%, #DCE6EF 100%); border-radius: 99px; height: 6px; outline: none; width: 100%; }
+input[type='range'] { -webkit-appearance: none; -moz-appearance: none; appearance: none; background: linear-gradient(to right, #0ABFC0 0%, #0ABFC0 var(--val, 50%), #FFFFFF var(--val, 50%), #FFFFFF 100%); border-radius: 99px; height: 6px; outline: none; width: 100%; }
 input[type='range']::-webkit-slider-thumb { -webkit-appearance: none; -moz-appearance: none; appearance: none; background: #FFFFFF; border: 3px solid #0ABFC0; border-radius: 50%; box-shadow: 0 0 0 3px #0bb8b82e, 0 3px 8px #082b521f; height: 19px; width: 19px; cursor: pointer; }
 input[type='range']::-moz-range-thumb { background: #FFFFFF; border: 3px solid #0ABFC0; border-radius: 50%; box-shadow: 0 0 0 3px #0bb8b82e, 0 3px 8px #082b521f; height: 13px; width: 13px; cursor: pointer; }
 
