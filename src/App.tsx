@@ -93,6 +93,55 @@ function useCountUp(target: number, duration = 700) {
   return value;
 }
 
+function CustomerCounter() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const target = 1600;
+  const duration = 2200;
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !hasAnimated) {
+        setHasAnimated(true);
+        const start = performance.now();
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          setCount(Math.floor(target * eased));
+          if (t < 1) requestAnimationFrame(tick);
+          else setCount(target);
+        };
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [hasAnimated]);
+
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#F3F6FA] via-[#DDF5F4] to-[#F3F6FA] px-5 py-16 md:py-20">
+      <div className="float-orb absolute -right-24 top-0 h-64 w-64 rounded-full bg-[#DDF5F4] blur-3xl opacity-60" />
+      <div className="dot-float absolute left-1/4 top-1/3 h-2.5 w-2.5 rounded-full bg-[#08B3B5] shadow-[0_0_12px_rgba(8,179,181,.5)]" />
+      <div className="dot-float-slow absolute right-1/3 bottom-1/4 h-2 w-2 rounded-full bg-[#08B3B5] shadow-[0_0_10px_rgba(8,179,181,.5)]" />
+      <div ref={ref} className="relative mx-auto flex max-w-7xl flex-col items-center justify-center gap-3 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#8DD6D5] bg-white/70 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#082B52] shadow-sm backdrop-blur-sm">
+          <UsersRound size={13} className="text-[#08B3B5]" /> Growing every day
+        </div>
+        <div className="flex items-baseline justify-center gap-1">
+          <span className="font-display text-6xl font-extrabold tracking-[-0.05em] text-[#08B3B5] tabular-nums sm:text-7xl md:text-8xl number-pop" key={count}>{count.toLocaleString('en-IN')}</span>
+          <span className="font-display text-5xl font-extrabold text-[#08B3B5] sm:text-6xl md:text-7xl">+</span>
+        </div>
+        <p className="text-lg font-bold text-[#082B52] sm:text-xl">Customer Base</p>
+        <div className="mt-2 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-[#08B3B5] to-transparent" />
+        <p className="mt-2 max-w-md text-sm leading-6 text-[#5C748A]">Trusted by customers across India to find the right financial solution.</p>
+      </div>
+    </section>
+  );
+}
+
 function BankMarquee() {
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -371,6 +420,9 @@ function App() {
             </Reveal>
           </div>
         </section>
+
+        {/* CUSTOMER BASE COUNTER */}
+        <CustomerCounter />
 
         {/* EMI CALCULATOR */}
         <section id="calculator" className="relative overflow-hidden bg-white px-5 py-24 md:px-8 md:py-32"><div className="shimmer-band absolute top-0 left-0 h-1.5 w-full" /><div className="float-orb-slow absolute -right-32 top-20 h-96 w-96 rounded-full bg-[#EAF1F7] blur-3xl opacity-40" /><div className="float-orb absolute -left-20 bottom-10 h-72 w-72 rounded-full bg-[#DDF5F4] blur-3xl opacity-40" /><div className="dot-float absolute left-10 top-1/3 h-3 w-3 rounded-full bg-[#08B3B5] shadow-[0_0_12px_rgba(8,179,181,.5)]" /><div className="dot-float-slow absolute right-16 bottom-1/4 h-2.5 w-2.5 rounded-full bg-[#08B3B5] shadow-[0_0_12px_rgba(8,179,181,.5)]" /><div className="relative mx-auto grid max-w-7xl gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center"><Reveal variant="left"><div><p className="eyebrow">Plan with perspective</p><h2 className="section-title">Plan your EMI</h2><p className="mt-5 max-w-md text-base leading-7 text-[#5C748A]">Use this simple calculator to create an illustrative estimate and get a feel for your monthly planning.</p><div className="mt-8 flex items-center gap-3 text-sm font-semibold text-[#5C748A]"><div className="rounded-full bg-gradient-to-br from-[#DDF5F4] to-[#DDF5F4] p-2.5 text-[#08B3B5]"><Calculator size={19} /></div> Adjust the details to explore different scenarios.</div><div className="mt-8 grid grid-cols-3 gap-3">{[['₹1L', 'Min amount'], ['5–20%', 'Rate range'], ['1–20 yr', 'Tenure']].map(([v, l]) => <div key={l} className="rounded-xl border border-[#DCE6EF] bg-[#FFFFFF] p-3 text-center"><p className="font-display text-base font-bold text-[#08B3B5]">{v}</p><p className="mt-1 text-[10px] font-semibold text-[#5C748A]">{l}</p></div>)}</div></div></Reveal><Reveal variant="right" delay={120}><div className="rounded-[32px] bg-gradient-to-br from-[#082B52] via-[#0A3160] to-[#082B52] p-6 text-white shadow-[0_30px_70px_rgba(8,43,82,0.25)] md:p-9"><div className="mb-7 flex items-center justify-between"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#A6E8E7]">EMI Calculator</p><p className="mt-1 text-[11px] text-[#A6E8E7]">Illustrative estimate</p></div><div className="rounded-xl border-glow bg-white/10 p-2.5 text-[#08B3B5]"><Calculator size={22} /></div></div><div className="grid gap-8 md:grid-cols-[1fr_1fr]"><div className="space-y-7"><label className="block"><div className="mb-3 flex justify-between text-sm font-semibold"><span className="text-[#cfe2df]">Loan amount</span><span className="rounded-lg bg-[#08B3B5]/15 px-2.5 py-0.5 text-[#08B3B5]">{formatCurrency(loanAmount)}</span></div><input type="range" min="100000" max="5000000" step="50000" value={loanAmount} onChange={(event) => setLoanAmount(Number(event.target.value))} /></label><label className="block"><div className="mb-3 flex justify-between text-sm font-semibold"><span className="text-[#cfe2df]">Interest rate</span><span className="rounded-lg bg-[#08B3B5]/15 px-2.5 py-0.5 text-[#08B3B5]">{interestRate.toFixed(1)}%</span></div><input type="range" min="5" max="20" step="0.1" value={interestRate} onChange={(event) => setInterestRate(Number(event.target.value))} /></label><label className="block"><div className="mb-3 flex justify-between text-sm font-semibold"><span className="text-[#cfe2df]">Loan tenure</span><span className="rounded-lg bg-[#08B3B5]/15 px-2.5 py-0.5 text-[#08B3B5]">{tenure} years</span></div><input type="range" min="1" max="20" step="1" value={tenure} onChange={(event) => setTenure(Number(event.target.value))} /></label></div><div className="rounded-2xl bg-gradient-to-br from-[#0A3160] to-[#082B52] p-6 shadow-inner"><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#A6E8E7]">Estimated monthly EMI</p><p className="mt-3 font-display text-4xl font-bold text-white tabular-nums">{formatCurrency(emiAnim)}</p><div className="my-6 h-px bg-white/15" /><div className="space-y-4 text-sm"><div className="flex justify-between"><span className="text-[#A6E8E7]">Total interest</span><span className="font-bold text-[#08B3B5] tabular-nums">{formatCurrency(interestAnim)}</span></div><div className="flex justify-between"><span className="text-[#A6E8E7]">Total payable</span><span className="font-bold text-white tabular-nums">{formatCurrency(payableAnim)}</span></div></div><div className="mt-6"><div className="mb-2 flex justify-between text-[11px] font-semibold text-[#A6E8E7]"><span>Principal {Math.round(principalRatio)}%</span><span>Interest {Math.round(100 - principalRatio)}%</span></div><div className="flex h-3 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-l-full bg-gradient-to-r from-[#08B3B5] to-[#08B3B5] transition-all duration-500" style={{ width: `${principalRatio}%` }} /><div className="h-full rounded-r-full bg-gradient-to-r from-[#08B3B5] to-[#0ABFC0] transition-all duration-500" style={{ width: `${100 - principalRatio}%` }} /></div></div></div></div><p className="mt-7 text-xs leading-5 text-[#A6E8E7]">This calculator provides an illustrative estimate only. Actual loan terms and eligibility may vary.</p></div></Reveal></div></section>
