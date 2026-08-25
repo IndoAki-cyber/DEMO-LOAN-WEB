@@ -1,36 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import {
-  ArrowRight,
-  ArrowUpRight,
-  ArrowLeftRight,
-  BadgeCheck,
-  Banknote,
-  BriefcaseBusiness,
-  Building2,
-  Calculator,
-  Check,
-  ChevronDown,
-  CircleDollarSign,
-  ClipboardList,
-  Compass,
-  CarFront,
-  HandCoins,
-  House,
-  Landmark,
-  LineChart,
-  Lock,
-  MapPin,
-  Menu,
-  MessageCircle,
-  MoveRight,
-  ShieldCheck,
-  Sparkles,
-  TrendingUp,
-  UserRound,
-  UsersRound,
-  X,
-  Zap,
-} from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ArrowLeftRight, BadgeCheck, Banknote, BriefcaseBusiness, Building2, Calculator, Check, ChevronDown, CircleDollarSign, ClipboardList, Compass, CarFront, HandCoins, House, Landmark, ChartLine as LineChart, Lock, MapPin, Menu, MessageCircle, MoveRight, ShieldCheck, Sparkles, TrendingUp, UserRound, UsersRound, X, Zap } from 'lucide-react';
 
 const logoPath = '/assets/images/ChatGPT_Image_Aug_10,_2026,_09_40_33_PM.png';
 const portraitPath = '/assets/images/WhatsApp_Image_2026-08-10_at_8.51.41_PM.jpeg';
@@ -55,13 +24,13 @@ const faqs = [
 
 const marqueeItems = [
   { name: 'SBI', image: '/assets/images/sbi-investigates-reported-massive-data-leak-showcase_image-2-a-11986.jpg' },
-  { name: 'Axis Bank' },
-  { name: 'Induslnd Bank' },
-  { name: 'Bank of Baroda' },
+  { name: 'Axis Bank', image: '/assets/images/Screenshot_2026-08-25_190417.png' },
+  { name: 'IndusInd Bank', image: '/assets/images/indusind-01.webp' },
+  { name: 'Bank of Baroda', image: '/assets/images/Bank-of-Baroda.jpg' },
   { name: 'Central Bank of India', image: '/assets/images/centralbankofindia-1618313972.webp' },
   { name: 'Canara Bank', image: '/assets/images/CANARA-BANK-23-12-2024.jpg' },
   { name: 'AU Bank', image: '/assets/images/AU-Bank-new-logo-for-GBM_1024X1024_(cropped).png' },
-  { name: 'Kotak Bank' },
+  { name: 'Kotak Bank', image: '/assets/images/Screenshot_2026-08-25_190814.png' },
 ];
 
 function Reveal({ children, className = '', delay = 0, variant = 'up' }: { children: ReactNode; className?: string; delay?: number; variant?: 'up' | 'left' | 'right' | 'scale' | 'tilt' }) {
