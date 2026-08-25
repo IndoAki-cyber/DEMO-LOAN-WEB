@@ -53,7 +53,16 @@ const faqs = [
   ['Can I enquire online?', 'Yes. You can submit an enquiry online and share your requirement with the FINZOCASH team.'],
 ];
 
-const marqueeItems = ['SBI', 'Axis Bank', 'Induslnd Bank', 'Bank of Baroda', 'Central Bank of India', 'Canara Bank', 'AU Bank', 'Kotak Bank'];
+const marqueeItems = [
+  { name: 'SBI', image: '/assets/images/sbi-investigates-reported-massive-data-leak-showcase_image-2-a-11986.jpg' },
+  { name: 'Axis Bank' },
+  { name: 'Induslnd Bank' },
+  { name: 'Bank of Baroda' },
+  { name: 'Central Bank of India', image: '/assets/images/centralbankofindia-1618313972.webp' },
+  { name: 'Canara Bank', image: '/assets/images/CANARA-BANK-23-12-2024.jpg' },
+  { name: 'AU Bank', image: '/assets/images/AU-Bank-new-logo-for-GBM_1024X1024_(cropped).png' },
+  { name: 'Kotak Bank' },
+];
 
 function Reveal({ children, className = '', delay = 0, variant = 'up' }: { children: ReactNode; className?: string; delay?: number; variant?: 'up' | 'left' | 'right' | 'scale' | 'tilt' }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -256,8 +265,14 @@ function BankMarquee() {
       <div className="overflow-hidden select-none">
         <div ref={trackRef} className="flex w-max items-center gap-10 whitespace-nowrap py-1 will-change-transform">
           {items.map((item, i) => (
-            <span key={i} className="flex items-center gap-10 text-[14px] font-bold uppercase tracking-[0.16em] text-[#DDF5F4]">
-              <span className="transition-colors hover:text-white">{item}</span>
+            <span key={`${item.name}-${i}`} className="flex items-center gap-10 text-[14px] font-bold uppercase tracking-[0.16em] text-[#DDF5F4]">
+              {item.image ? (
+                <span className="flex h-[52px] w-[156px] items-center justify-center overflow-hidden rounded-xl border border-white/40 bg-white/90 px-3 py-1.5 shadow-[0_4px_14px_rgba(0,20,45,.14)] backdrop-blur-sm transition-transform duration-300 hover:scale-[1.03]">
+                  <img src={item.image} alt={item.name} className="max-h-full max-w-full rounded-md object-contain opacity-90" />
+                </span>
+              ) : (
+                <span className="transition-colors hover:text-white">{item.name}</span>
+              )}
               <Sparkles size={14} className="text-[#A6E8E7]" />
             </span>
           ))}
